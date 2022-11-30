@@ -1,1 +1,35 @@
-test
+explanation:
+mac address 
+32 bit address in the nic. 
+ethernet frame header
+contains a few field most important field are the source and destination mac address
+
+mac address learning 
+the mac addresses are saved in the mac address table, 
+dymanic the switch looks at the source mac adress to remember what mac address is asociated to what port. 
+static configured in the mac address table. or byt cpu
+the addresses are remembered for 300 seconds by default this can be configured. 
+when the port is turned off then the mac address is also forgotten. 
+
+commands
+#showing the mac address table 
+show mac address-table
+#search the mac address table for a specific address 
+show mac address-table address aa:bb:cc:dd:ee:ff
+show the amount of addresses inside the mac address table
+show mac accdress-table count
+
+#change the aging timer (recomended to not change this value)
+switch(config)# mac address-table aging-time <secs> 
+#configure static mac address
+switch(config)# mac address-table static <mac> vlan <id> interface <type/number> 
+#example
+mac address-table static aa:bb:cc:ee:dd:ff vlan 20 interface ge0/0/2
+
+explanation: 
+what does a switch do with a ethernet frame 
+possible action:
+forward  (mac address is known - forward to correct mac address) 
+flood   (when the mac address is unkwown an arp packet will be sent flooding from all ports) 
+discord (this happens when 2 mac address are learned from the same port - switch asumes that they can communicate withoud it)
+        (also happens when the frame is to big or small this is called giant or a runt)
